@@ -1,56 +1,141 @@
-# Clothing Chatbot
+# clothing‑chatbot
 
-This project is a chatbot application that allows users to select clothing categories, primary colors, and types to receive descriptions of clothing items. 
+Small TypeScript project that reads a CSV of clothes and lets you look
+up a description by category / colour / type.  It can be used from the
+command line **and** via a tiny web page.
 
-## Project Structure
+## Install
 
+```bash
+npm install
 ```
-clothing-chatbot
-├── src
-│   ├── index.ts          # Entry point of the application
-│   ├── chatbot.ts        # ChatBot class with selection methods
-│   ├── categories        # Contains clothing categories
-│   │   └── index.ts
-│   ├── colors            # Contains primary colors
-│   │   └── index.ts
-│   ├── types             # Defines types and interfaces for clothing
-│   │   ├── clothing.ts
-│   │   └── index.ts
-│   └── descriptions      # Maps combinations to clothing descriptions
-│       └── index.ts
-├── package.json          # npm configuration file
-├── tsconfig.json         # TypeScript configuration file
-└── README.md             # Project documentation
-```
-
-## Installation
-
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```
-   cd clothing-chatbot
-   ```
-3. Install the dependencies:
-   ```
-   npm install
-   ```
 
 ## Usage
 
-To run the chatbot, execute the following command:
+### Command‑line
+
+The same command that starts the web server also runs the CLI prompts.
+
+```bash
+npm start      # runs ts-node src/index.ts
 ```
-npm start
+
+After the CSV has been read you’ll see the available categories, colours
+and types printed to the terminal, then you’ll be asked to enter three
+numeric IDs.  Enter them and press Enter to get a description.
+
+You can keep using the CLI even when the web UI is running; just cancel
+the process with **Ctrl‑C** when you’re done.
+
+### Web UI
+
+A tiny Express server is started by `npm start`.  
+Open your browser at [http://localhost:3000](http://localhost:3000) and
+you’ll get a simple page with three dropdowns and a **Describe** button.
+
+The page uses two API endpoints:
+
+* **`/api/options`** – returns the lists of categories, colours and types.
+* **`/api/describe?cat=…&col=…&type=…`** – returns one or more
+  descriptions matching the selected combination.
+
+You can style or extend the HTML in `public/index.html`, or replace it
+with a more sophisticated front‑end if you like.
+
+## CSV format
+
+The code expects a file at the path configured in
+`src/index.ts` (currently
+`/Users/tingtingbi/Downloads/Clothes Inventory - 2026 Clothes.csv`).
+Adjust that path or move your CSV if necessary.
+
+The CSV must have these headers (only the first three are used):
+
+```
+Category,"Description (Brand)",Primary Color,Secondary Color,Type,Frequency
 ```
 
-Follow the prompts to select a category, primary color, and type of clothing. The chatbot will then provide a description based on your selections.
+Any number of rows may be present; rows with the same category/colour/type
+will all be returned by the chatbot.
 
-## Contributing
+## Development
 
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+* The project uses `ts-node` – modify files under `src/` and rerun
+  `npm start` to see changes.
+* Add or edit rows in the CSV and restart `npm start` to pick them up.
+* To stop the server, press **Ctrl‑C** in the terminal where it’s running.
+* Commit your changes and push to your GitHub repository as usual.
 
-## License
+Feel free to expand this README further with screenshots, build
+instructions, or deployment notes if you publish the app somewhere.
+```// filepath: README.md
+# clothing‑chatbot
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+Small TypeScript project that reads a CSV of clothes and lets you look
+up a description by category / colour / type.  It can be used from the
+command line **and** via a tiny web page.
+
+## Install
+
+```bash
+npm install
+```
+
+## Usage
+
+### Command‑line
+
+The same command that starts the web server also runs the CLI prompts.
+
+```bash
+npm start      # runs ts-node src/index.ts
+```
+
+After the CSV has been read you’ll see the available categories, colours
+and types printed to the terminal, then you’ll be asked to enter three
+numeric IDs.  Enter them and press Enter to get a description.
+
+You can keep using the CLI even when the web UI is running; just cancel
+the process with **Ctrl‑C** when you’re done.
+
+### Web UI
+
+A tiny Express server is started by `npm start`.  
+Open your browser at [http://localhost:3000](http://localhost:3000) and
+you’ll get a simple page with three dropdowns and a **Describe** button.
+
+The page uses two API endpoints:
+
+* **`/api/options`** – returns the lists of categories, colours and types.
+* **`/api/describe?cat=…&col=…&type=…`** – returns one or more
+  descriptions matching the selected combination.
+
+You can style or extend the HTML in `public/index.html`, or replace it
+with a more sophisticated front‑end if you like.
+
+## CSV format
+
+The code expects a file at the path configured in
+`src/index.ts` (currently
+`/Users/tingtingbi/Downloads/Clothes Inventory - 2026 Clothes.csv`).
+Adjust that path or move your CSV if necessary.
+
+The CSV must have these headers (only the first three are used):
+
+```
+Category,"Description (Brand)",Primary Color,Secondary Color,Type,Frequency
+```
+
+Any number of rows may be present; rows with the same category/colour/type
+will all be returned by the chatbot.
+
+## Development
+
+* The project uses `ts-node` – modify files under `src/` and rerun
+  `npm start` to see changes.
+* Add or edit rows in the CSV and restart `npm start` to pick them up.
+* To stop the server, press **Ctrl‑C** in the terminal where it’s running.
+* Commit your changes and push to your GitHub repository as usual.
+
+Feel free to expand this README further with screenshots, build
+instructions, or deployment notes if you publish the app somewhere.
