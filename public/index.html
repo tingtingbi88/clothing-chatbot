@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothing Chatbot</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    label { display: block; margin-top: 1rem; }
+    select, button { margin-top: 0.5rem; padding: 0.4rem; }
+    #output { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Clothing Chatbot</h1>
+  <label>Category
+    <select id="cat"></select>
+  </label>
+  <label>Color
+    <select id="col"></select>
+  </label>
+  <label>Type
+    <select id="type"></select>
+  </label>
+  <button id="go">Describe</button>
+  <div id="output"></div>
+
+  <script>
+    async function loadOptions() {
+      const res = await fetch('/api/options');
+      const opts = await res.json();
+      const catSel = document.getElementById('cat');
+      const colSel = document.getElementById('col');
+      const typeSel = document.getElementById('type');
+      opts.categories.forEach(c => { catSel.add(new Option(c.name, c.id)); });
+      opts.colors.forEach(c => { colSel.add(new Option(c.name, c.id)); });
+      opts.types.forEach(t => { typeSel.add(new Option(t.name, t.id)); });
+    }
+
+    document.getElementById('go').onclick = async () => {
+      const cat = document.getElementById('cat').value;
+      const col = document.getElementById('col').value;
+      const type = document.getElementById('type').value;
+      const res = await fetch(`/api/describe?cat=${cat}&col=${col}&type=${type}`);
+      const data = await res.json();
+      const out = document.getElementById('output');
+      out.textContent = '';
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          const p = document.createElement('p');
+          p.textContent = item;
+          out.appendChild(p);
+        });
+      } else {
+        out.textContent = String(data);
+      }
+    };
+
+    loadOptions();
+  </script>
+</body>
+</html>
