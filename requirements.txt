@@ -1,2 +1,6 @@
 streamlit
 pandas
+json
+streamlit-lottie
+requests
+datetime
