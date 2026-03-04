@@ -1,141 +1,133 @@
-# clothing‑chatbot
+# Clothing Chatbot
 
-Small TypeScript project that reads a CSV of clothes and lets you look
-up a description by category / colour / type.  It can be used from the
-command line **and** via a tiny web page.
+A wardrobe and outfit helper with **two versions**:
+- A TypeScript (Node/Express) CLI + web server
+- A cute, pastel Streamlit (Python) app with weather and outfit suggestions
 
-## Install
+---
 
+## Contents
+
+- [Features](#features)
+- [TypeScript Version](#typescript-version)
+- [Streamlit Version](#streamlit-version)
+- [CSV Format](#csv-format)
+- [Customization](#customization)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Features
+
+- CSV-based wardrobe management
+- CLI and web UI (TypeScript)
+- Cute, pastel Streamlit web app (Python)
+- Weather info and today’s date (Streamlit)
+- Lottie animation (Streamlit)
+- Dress disables bottoms logic (Streamlit)
+- Outfit combinations and suggestions
+- Easy to extend and customize
+
+---
+
+## TypeScript Version
+
+**Setup:**
 ```bash
 npm install
 ```
 
-## Usage
-
-### Command‑line
-
-The same command that starts the web server also runs the CLI prompts.
-
+**Run CLI + Express web server:**
 ```bash
-npm start      # runs ts-node src/index.ts
+npm start
 ```
 
-After the CSV has been read you’ll see the available categories, colours
-and types printed to the terminal, then you’ll be asked to enter three
-numeric IDs.  Enter them and press Enter to get a description.
+- Visit [http://localhost:3000](http://localhost:3000) for the web UI.
+- Use the CLI in your terminal as prompted.
 
-You can keep using the CLI even when the web UI is running; just cancel
-the process with **Ctrl‑C** when you’re done.
+---
 
-### Web UI
+## Streamlit Version
 
-A tiny Express server is started by `npm start`.  
-Open your browser at [http://localhost:3000](http://localhost:3000) and
-you’ll get a simple page with three dropdowns and a **Describe** button.
+**Install dependencies:**
+```bash
+pip install -r requirements.txt
+pip install streamlit streamlit-lottie pandas requests
+```
 
-The page uses two API endpoints:
+**Set up pastel theme:**  
+Create `.streamlit/config.toml` in your project root:
+```toml
+[theme]
+primaryColor = "#FFB6C1"
+backgroundColor = "#FFF0F5"
+secondaryBackgroundColor = "#FDEEF4"
+textColor = "#4B2E83"
+font = "sans serif"
+```
 
-* **`/api/options`** – returns the lists of categories, colours and types.
-* **`/api/describe?cat=…&col=…&type=…`** – returns one or more
-  descriptions matching the selected combination.
+**Get a weather API key:**  
+Sign up at [OpenWeatherMap](https://openweathermap.org/api) and add your key to `app.py`.
 
-You can style or extend the HTML in `public/index.html`, or replace it
-with a more sophisticated front‑end if you like.
+**Run the app:**
+```bash
+streamlit run app.py
+```
 
-## CSV format
+- Opens in your browser at [http://localhost:8501](http://localhost:8501)
+- Lottie animation, weather, date, and outfit selection
 
-The code expects a file at the path configured in
-`src/index.ts` (currently
-`/Users/tingtingbi/Downloads/Clothes Inventory - 2026 Clothes.csv`).
-Adjust that path or move your CSV if necessary.
+---
 
-The CSV must have these headers (only the first three are used):
+## CSV Format
+
+The app expects a CSV file at  
+`/Users/tingtingbi/Downloads/Clothes Inventory - 2026 Clothes.csv`  
+with at least these columns:
 
 ```
 Category,"Description (Brand)",Primary Color,Secondary Color,Type,Frequency
 ```
 
-Any number of rows may be present; rows with the same category/colour/type
-will all be returned by the chatbot.
-
-## Development
-
-* The project uses `ts-node` – modify files under `src/` and rerun
-  `npm start` to see changes.
-* Add or edit rows in the CSV and restart `npm start` to pick them up.
-* To stop the server, press **Ctrl‑C** in the terminal where it’s running.
-* Commit your changes and push to your GitHub repository as usual.
-
-Feel free to expand this README further with screenshots, build
-instructions, or deployment notes if you publish the app somewhere.
-```// filepath: README.md
-# clothing‑chatbot
-
-Small TypeScript project that reads a CSV of clothes and lets you look
-up a description by category / colour / type.  It can be used from the
-command line **and** via a tiny web page.
-
-## Install
-
-```bash
-npm install
+Example row:
+```
+Athletic,Lululemon green tank,Green,Not Applicable,Shirts,Weekly
 ```
 
-## Usage
+You can edit the path in `app.py` if your CSV is elsewhere.
 
-### Command‑line
+---
 
-The same command that starts the web server also runs the CLI prompts.
+## Customization
 
-```bash
-npm start      # runs ts-node src/index.ts
-```
+- **Change the Lottie animation:**  
+  Edit the `lottie_url` in `app.py` to use any [LottieFiles](https://lottiefiles.com/) animation you like.
+- **Change the wardrobe CSV path:**  
+  Edit the `csv_path` variable in `app.py`.
+- **Change the city for weather:**  
+  Edit the `city` variable in `app.py`.
+- **Add more clothing types:**  
+  Update the `tops_types` and `bottoms_types` lists in `app.py`.
 
-After the CSV has been read you’ll see the available categories, colours
-and types printed to the terminal, then you’ll be asked to enter three
-numeric IDs.  Enter them and press Enter to get a description.
+---
 
-You can keep using the CLI even when the web UI is running; just cancel
-the process with **Ctrl‑C** when you’re done.
+## Screenshots
 
-### Web UI
+*(Add screenshots of both UIs here for extra cuteness!)*
 
-A tiny Express server is started by `npm start`.  
-Open your browser at [http://localhost:3000](http://localhost:3000) and
-you’ll get a simple page with three dropdowns and a **Describe** button.
+---
 
-The page uses two API endpoints:
+## Contributing
 
-* **`/api/options`** – returns the lists of categories, colours and types.
-* **`/api/describe?cat=…&col=…&type=…`** – returns one or more
-  descriptions matching the selected combination.
+Pull requests are welcome!  
+Feel free to open issues for suggestions or bugs.
 
-You can style or extend the HTML in `public/index.html`, or replace it
-with a more sophisticated front‑end if you like.
+---
 
-## CSV format
+## License
 
-The code expects a file at the path configured in
-`src/index.ts` (currently
-`/Users/tingtingbi/Downloads/Clothes Inventory - 2026 Clothes.csv`).
-Adjust that path or move your CSV if necessary.
+MIT
 
-The CSV must have these headers (only the first three are used):
-
-```
-Category,"Description (Brand)",Primary Color,Secondary Color,Type,Frequency
-```
-
-Any number of rows may be present; rows with the same category/colour/type
-will all be returned by the chatbot.
-
-## Development
-
-* The project uses `ts-node` – modify files under `src/` and rerun
-  `npm start` to see changes.
-* Add or edit rows in the CSV and restart `npm start` to pick them up.
-* To stop the server, press **Ctrl‑C** in the terminal where it’s running.
-* Commit your changes and push to your GitHub repository as usual.
-
-Feel free to expand this README further with screenshots, build
-instructions, or deployment notes if you publish the app somewhere.
+---
