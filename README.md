@@ -6,9 +6,47 @@ This repo contains three main apps:
 2. **Clothing Chatbot (Streamlit)** – Pastel-themed Python app for outfit suggestions
 3. **Houston Restaurant Recommender (Streamlit)** – Restaurant explorer for Houston & Phoenix
 
+
+
+## 4. Weekly Meal Prep (Streamlit)
+
+**weekly_meal_prep_app.py** is a Streamlit app to help you plan and prep your meals for the week.
+
+**Features:**
+- Upload a CSV of your favorite recipes
+- Select meals for each day of the week
+- Automatically generates a shopping list
+- Simple, clean UI for meal planning
+
+**Install dependencies:**
+```bash
+pip install -r requirements.txt
+pip install streamlit pandas
+```
+
+**Run the app:**
+```bash
+streamlit run weekly_meal_prep_app.py
+```
+- Opens in your browser at [http://localhost:8501](http://localhost:8501)
+- Expects a CSV file (e.g., `Digital_Recipes.csv`) with your recipes
+
+**CSV Format:**
+The app expects a CSV file with at least these columns:
+```
+Recipe,Ingredients,Instructions
+```
+Example row:
+```
+Pasta Primavera,"pasta, broccoli, bell pepper, olive oil","Boil pasta. Sauté veggies. Mix."
+```
+You can edit the path in `weekly_meal_prep_app.py` if your CSV is elsewhere.
+
+**Customization:**
+- Change the recipe CSV path: edit the file path in `weekly_meal_prep_app.py`
+- Add more days or meal slots: update the code in `weekly_meal_prep_app.py`
+
 ---
-
-
 ## 1. Clothing Chatbot (TypeScript)
 
 **Features:**
